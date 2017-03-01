@@ -73,11 +73,37 @@ class MysqlFunController extends Controller
 		echo $data;
 		echo '<br>';
 
+		$data = M('user')->distinct(true)->field('age')->order('id desc')->select();
+		dump($data);
+		echo '<br>';
 
+		echo '<br>';
 		$model_e = M();
 		$data = $model_e->query('select * from user');
 		dump($data);
 
+	}
+
+	public function multReadFun()
+	{
+		$data = M()->table([
+			'user' => 'user', 'acount' => 'acount'
+		])->where('user.id=acount.id')->select();
+		dump($data);
+
+		echo "<br>";
+		$data = M('user')->join('join acount On acount.id=user.id')->select();
+		dump($data);
+
+		echo "<br>";
+		$data = M('user')->field('name,id')->union('select name,id from acount')->select();
+		dump($data);
+
+		echo "<br>";
+		$data = M('user')->field('name')->union([
+			'field' => 'name', 'table' => 'acount'
+		])->select();
+		dump($data);
 	}
 
 	public function createFun()
