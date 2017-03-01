@@ -77,6 +77,11 @@ class MysqlFunController extends Controller
 		dump($data);
 		echo '<br>';
 
+		$model = D('user');
+		$data = $model->scope('great,less')->where('id < 5')->select();
+		dump($data);
+		echo '<br>';
+
 		echo '<br>';
 		$model_e = M();
 		$data = $model_e->query('select * from user');
