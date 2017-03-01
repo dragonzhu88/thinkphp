@@ -13,11 +13,66 @@ use Think\Controller;
 
 class MysqlFunController extends Controller
 {
-	public function readFun(){
+	public function readFun()
+	{
 		$model = M('user');
-		dump($model->select());
+		dump($model->order('age desc,id desc')->select());
+
 
 		echo '<br>';
+		$model = M('user');
+		dump($model->field('id,name')->order('age desc,id desc')->select());
+
+		echo '<br>';
+		$model = M('user');
+		dump($model->field('id,name')->order('age desc,id desc')->limit(1, 3)->select());
+
+		echo '<br>';
+		$model = M('user');
+		dump($model->field('id,name')->order('age desc,id desc')->page(1, 2)->select());
+
+		echo '<br>';
+		$model = M('user');
+		dump($model->field('age,count(*) as total')->having('age>20')->group('age')->select());
+
+		echo '<br>';
+
+		$where['id'] = 2;
+		$where['name'] = 'ff';
+		$where['_logic'] = 'or';
+		$data = $model->where($where)->select();
+		dump($data);
+		echo '<br>';
+
+//		$where['id'] = ['lt', 2];
+//		$where['name'] = ['like', ['%f']];
+		$where['id'] = [
+			['gt', 1], ['lt', 3], 'or'
+		];
+		$data = $model->where($where)->select();
+		dump($data);
+		echo '<br>';
+
+		$data = M('user')->count();
+		echo $data;
+		echo '<br>';
+
+		$data = M('user')->min('id');
+		echo $data;
+		echo '<br>';
+
+		$data = M('user')->max('id');
+		echo $data;
+		echo '<br>';
+
+		$data = M('user')->avg('age');
+		echo $data;
+		echo '<br>';
+
+		$data = M('user')->sum('age');
+		echo $data;
+		echo '<br>';
+
 
 		$model_e = M();
 		$data = $model_e->query('select * from user');
@@ -25,7 +80,8 @@ class MysqlFunController extends Controller
 
 	}
 
-	public function createFun(){
+	public function createFun()
+	{
 		$model = M('user');
 		$data['name'] = 'yyy';
 		$data['age'] = 11;
@@ -33,7 +89,29 @@ class MysqlFunController extends Controller
 		dump($model->select());
 	}
 
-	public function updateFun(){
+	public function createAllFun()
+	{
+		$model = M('user');
+		$data = [
+			[
+				'name' => 'ggg',
+				'age' => 66,
+			],
+			[
+				'name' => 'gg',
+				'age' => 6666,
+			],
+			[
+				'name' => 'g',
+				'age' => 666,
+			],
+		];
+		$model->addAll($data);
+		dump($model->select());
+	}
+
+	public function updateFun()
+	{
 		$model = M('user');
 		$data['name'] = 'zzz';
 		$data['age'] = 25;
@@ -46,7 +124,8 @@ class MysqlFunController extends Controller
 		dump($data);
 	}
 
-	public function deleteFun(){
+	public function deleteFun()
+	{
 		$model = M('user');
 		$model->where('name="yyy"')->delete();
 		dump($model->select());
