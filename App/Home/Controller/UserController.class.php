@@ -15,10 +15,12 @@ class UserController extends Controller
 {
 	public function index(){
 		echo "index";
+		$this->display();
 	}
 
 	public function edit(){
 		echo "edit";
+
 	}
 
 	public function login(){

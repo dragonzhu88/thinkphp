@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{$me.username}
+<hr>
+{$me.age}
+<hr>
+<volist name="list" id="data" offset="1" length="2" empty="no data">
+    {$data.type} --- {$data.num} <br>
+</volist>
+
+<foreach name="list" item="data">
+    {$data.type} --- {$data.num} <br>
+</foreach>
+
+<if condition="$num gt 10">
+    > 10
+    <elseif condition="$num lt 10"/>
+    < 10
+    <else/>
+    = 10
+</if>
+
+<switch name="name">
+    <case value="zdc">zdc</case>
+    <default/>
+    default
+</switch>
+
+<eq name="num" value="10"> num = 10
+    <else/>
+    num != 10
+</eq>
+
+<in name="num" value="1,2,3">in</in>
+<notin name="num" value="11,12">not in</notin>
+<between name="num" value="1,11">in between</between>
+<notbetween name="num" value="11,15">not between</notbetween>
+<range name="num" value="1,10,11" type="in">in range</range>
+
+{$num>11?'>11':'<=11'}
+
+
+</body>
+</html>
